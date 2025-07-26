@@ -1,0 +1,12 @@
+/* إعادة تعيين الهوامش والمسافات لجعل التنسيق موحدًا عبر المتصفحات */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.container{
+    background-color: rgb(200, 200, 0);
+    width: 50%;
+    height: 50%;
+    margin: 0;
+}

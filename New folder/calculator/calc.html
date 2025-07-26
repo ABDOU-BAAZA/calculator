@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Online calculator for simple calculations, easy to use, Try it now without downloading, A simple online calculator for quickly and easily calculating mathematical operations. Try it now online without downloading.">
+      <meta name="keywords" content="حاسبة, آلة حاسبة, حاسبة بسيطة, آلة حاسبة علمية, حساب, calculator, online calculator">
+  <meta name="author" content="عبد الودود">
+  <link rel="icon" href="https://mulham.github.io/assets/posts/pi.jpg" type="image/png">
+
+  <title>Calculator</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+   
+    body{
+      background-color: #f2f2f2;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #fefefe;
+      width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    .screen {
+      background-color: #222;
+      color: #0f0;
+      padding: 20px;
+      font-size: 2rem;
+      text-align: right;
+      height: 80px;
+    }
+
+    .body {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background-color: #ccc;
+    }
+
+    .body button {
+      padding: 20px;
+      font-size: 1.2rem;
+      border: none;
+      background-color: #fff;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .body button:hover {
+      background-color: #e0e0e0;
+    }
+
+    .equals {
+      background-color: #4caf50;
+      color: white;
+      grid-column: span 2;
+    }
+
+    .clear {
+      background-color: #f44336;
+      color: white;
+      grid-column: span 2;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container">
+    
+    <header class="screen" id="screen">0</header>
+    <main class="body">
+      <button onclick="clearScreen()" class="clear">C</button>
+      <button onclick="appendValue('/')">÷</button>
+      <button onclick="appendValue('*')">×</button>
+      <button onclick="appendValue('7')">7</button>
+      <button onclick="appendValue('8')">8</button>
+      <button onclick="appendValue('9')">9</button>
+      <button onclick="appendValue('-')">−</button>
+      <button onclick="appendValue('4')">4</button>
+      <button onclick="appendValue('5')">5</button>
+      <button onclick="appendValue('6')">6</button>
+      <button onclick="appendValue('+')">+</button>
+      <button onclick="appendValue('1')">1</button>
+      <button onclick="appendValue('2')">2</button>
+      <button onclick="appendValue('3')">3</button>
+      <button onclick="appendValue('0')">0</button>
+      <button onclick="appendValue('.')">.</button>
+      <button onclick="calculate()" class="equals">=</button>
+    </main>
+  </div>
+
+  <script>
+    let screen = document.getElementById("screen");
+    let expression = "";
+
+    function updateScreen(value) {
+      screen.textContent = value;
+    }
+
+    function appendValue(value) {
+      if (screen.textContent === "0" && value !== ".") {
+        screen.textContent = value;
+      } else {
+        screen.textContent += value;
+      }
+      expression += value;
+    }
+
+    function clearScreen() {
+      updateScreen("0");
+      expression = "";
+    }
+
+    function calculate() {
+      try {
+        let result = eval(expression);
+        updateScreen(result);
+        expression = result.toString();
+      } catch (error) {
+        updateScreen("خطأ");
+        expression = "";
+      }
+    }
+
+    // ✅ دعم لوحة المفاتيح
+    document.addEventListener("keydown", function (event) {
+      const key = event.key;
+
+      if (!isNaN(key) || key === "." || key === "+" || key === "-" || key === "*" || key === "/") {
+        appendValue(key);
+      } else if (key === "Enter") {
+        event.preventDefault();
+        calculate();
+      } else if (key === "Backspace") {
+        event.preventDefault();
+        expression = expression.slice(0, -1);
+        screen.textContent = screen.textContent.slice(0, -1) || "0";
+      } else if (key.toLowerCase() === "c") {
+        clearScreen();
+      }
+    });
+  </script>
+</body>
+</html>
+
